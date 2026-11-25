@@ -47,6 +47,11 @@ def main() -> None:
         )
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(text, encoding="utf-8")
+    # Round-trip check: the grader reads exactly what is on disk, so
+    # confirm the file holds the clause byte for byte before reporting.
+    written = OUTPUT_PATH.read_text(encoding="utf-8")
+    if written != text:
+        raise SystemExit("written entry does not match the clause")
     print(text)
 
 
